@@ -1,0 +1,12 @@
+DONOR:
+0->data not stored
+1->data stored but hospital not linked 
+2-> Hospital linked hence data entry completed
+99->organ assigned
+
+donor_hospital:
+0->not approved by admin
+1->approved by admin
+
+user details:
+record stores states =1 // if record stored
