@@ -20,7 +20,7 @@ if(isset($_GET['id']) and $_GET['app']==1){
     $query_update_patient_inprogress = "UPDATE patient SET patient_status = 1 WHERE patient_id = $pid";
     $sql=mysqli_query($db,$query_update_patient_inprogress);
     if($sql){
-        header('location: approve_patient_hospital.php');
+//        header('location: approve_donor_hospital.php');
     }
 
 }
@@ -69,33 +69,39 @@ if(isset($_GET['id']) and $_GET['app']==1){
 						<br>
 						<!--patient table-->
 						<!---------------------------------  Display records where complete = 0 --------------------------------------->
-						<?php $results = mysqli_query($db, "SELECT * from patient_hospital WHERE status=0"); ?>
-							<b><u>patient-Hospital</u></b>
+						<?php $results = mysqli_query($db, "SELECT * from donor_hospital WHERE status=2");
+                        
+                        ?>
+							<b><u>Donor-Hospital-Doctor</u></b>
 							<table border='5'>
 								<thead>
 									<tr>
-										<th>REQ ID</th>
-										<th>patient Name</th>
+<!--										<th>ID</th>-->
+										<th>Donor Name</th>
 										<th>Hospital Name</th>
-										<th>Action</th>
+										<th>Doctor Name</th>
 		                                  
 									</tr>
 								</thead>
 								
 								<?php while ($row = mysqli_fetch_array($results)) {
-                                    $patient_id=$row['patient_id'];
-                                    $patient = mysqli_query($db, "SELECT patient_first_name, patient_last_name from patient WHERE patient_id=$patient_id");
-                                    $patient_name=mysqli_fetch_array($patient);
+                                    $donor_id=$row['donor_id'];
+                                    $donor = mysqli_query($db, "SELECT donor_first_name, donor_last_name from donor WHERE donor_id=$donor_id");
+                                    $donor_name=mysqli_fetch_array($donor);
     
                                     $hosp_id=$row['hospital_id'];
                                     $hosp = mysqli_query($db, "SELECT hospital_name from hospital WHERE hospital_id=$hosp_id");
                                     $hosp_name=mysqli_fetch_array($hosp);
+    
+                                    $doc = mysqli_query($db, "SELECT doctor_first_name, doctor_last_name from dcotor WHERE doctor_id IN (SELECT doctor_id from donor_doctor WHERE doctor_id IN (SELECT doctor_id FROM doctor_hospital WHERE hospital_id=$hosp_id))");
+                                    $doc_name=mysqli_fetch_array($doc);
                                 ?>
 									<tr>
-										<td><?php echo $row['patient_hospital']; ?></td>
-										<td><?php echo $patient_name['patient_first_name']." ".$patient_name['patient_last_name']; ?></td>
-                                        <td><?php echo $hosp_name['hospital_name']; ?></td>
-										<td><button class="editbtn"><a href="approve_patient_hospital.php?app=1&id=<?php echo $row['patient_hospital'];?>&pid=<?php echo $patient_id;?>">Approve</a></button></td>
+										<td><?php echo $donor_name['donor_first_name']." ".$donor_name['donor_last_name']; ?></td>
+										<td><?php echo $hosp_name['hospital_name']; ?></td>
+                                        <td><?php echo $doc_name['doctor_first_name']." ".$doc_name['doctor_last_name']; ?></td>
+<!--										<td><?php echo $hosp_name['hospital_name']; ?></td>-->
+										
 									</tr>
 								<?php } ?>
 							</table>
@@ -103,37 +109,6 @@ if(isset($_GET['id']) and $_GET['app']==1){
 						<br/>
 						
 						<br>
-						<!--List of already linked patient and hospitals-->
-								<?php $results = mysqli_query($db, "SELECT * from patient_hospital WHERE status=1"); ?>
-							<b><u>patient-Hospital(pending Doctor assignment)</u></b>
-							<table border='5'>
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>patient Name</th>
-										<th>Hospital Name</th>
-										<th>Action</th>
-		                                  
-									</tr>
-								</thead>
-								
-								<?php while ($row = mysqli_fetch_array($results)) {
-                                    $patient_id=$row['patient_id'];
-                                    $patient = mysqli_query($db, "SELECT patient_first_name, patient_last_name from patient WHERE patient_id=$patient_id");
-                                    $patient_name=mysqli_fetch_array($patient);
-    
-                                    $hosp_id=$row['hospital_id'];
-                                    $hosp = mysqli_query($db, "SELECT hospital_name from hospital WHERE hospital_id=$hosp_id");
-                                    $hosp_name=mysqli_fetch_array($hosp);
-                                ?>
-									<tr>
-										<td><?php echo $row['patient_hospital']; ?></td>
-										<td><?php echo $patient_name['patient_first_name']." ".$patient_name['patient_last_name']; ?></td>
-                                        <td><?php echo $hosp_name['hospital_name']; ?></td>
-										<td><button class="editbtn"><a href="patient_doctor.php?ass=1&hid=<?php echo $hosp_id;?>&pid=<?php echo $patient_id;?>">Assign Doctor</a></button></td>
-									</tr>
-								<?php } ?>
-							</table>
 						
 						
 						<br/>

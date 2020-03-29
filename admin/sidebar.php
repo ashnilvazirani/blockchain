@@ -46,14 +46,17 @@ body {
 <body>
 
 <div class="sidenav">
-    <a href="http://localhost/blockchain/admin/home.php">Home</a>
-  <a href="http://localhost/blockchain/admin/hospital/add_hospital_details.php">Add hosiptal</a>
-  <a href="http://localhost/blockchain/admin/hospital/view_hospital_list.php">View Hospitals</a>
-  <a href="http://localhost/blockchain/admin/approve_doctor.php">Approve Doctor</a>
-  <a href="http://localhost/blockchain/admin/view_list_doctors.php">View Doctor</a>
-  <a href="http://localhost/blockchain/admin/doctor_hospital.php">Doctor-Hospital</a>
-    <a href="http://localhost/blockchain/admin/approve_donor_hospital.php">Donor-Hospital</a>
-     <a href="http://localhost/blockchain/admin/approve_patient_hospital.php">Patient-Hospital</a>
+    <a href="http://localhost/blockchain/admin/home.php">-Home</a>
+  <a href="http://localhost/blockchain/admin/hospital/add_hospital_details.php">-Add hosiptal</a>
+  <a href="http://localhost/blockchain/admin/hospital/view_hospital_list.php">-View Hospitals</a>
+  <a href="http://localhost/blockchain/admin/approve_doctor.php">-Approve Doctor</a>
+  <a href="http://localhost/blockchain/admin/view_list_doctors.php">-View Doctor</a>
+  <a href="http://localhost/blockchain/admin/doctor_hospital.php">-Doctor-Hospital Link</a>
+    <a href="http://localhost/blockchain/admin/approve_donor_hospital.php">-Donor-Hospital Request</a>
+    <a href="http://localhost/blockchain/admin/donor_hospital_doctor.php">-Donor-Hospital-Doctor</a>
+     <a href="http://localhost/blockchain/admin/approve_patient_hospital.php">-Patient-Hospital Request</a>
+     <a href="http://localhost/blockchain/admin/patient_hospital_doctor.php">-Patient-Hospital-Doctor</a>
+    <a href="http://localhost/blockchain/admin/view_doctor_hospital.php">-Doctor-Hospital View</a>
 </div>   
 </body>
 </html> 

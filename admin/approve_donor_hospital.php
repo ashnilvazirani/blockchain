@@ -1,6 +1,6 @@
 <?php 
 include('../functions.php');
-//include_once('sidebar.php');
+include_once('sidebar.php');
 if (!isAdmin()) {
 	$_SESSION['msg'] = "You must log in first";
 	header('location: ../login.php');
@@ -68,9 +68,9 @@ if(isset($_GET['id']) and $_GET['app']==1){
 						<i  style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i> 
 						<br>
 						<!--Donor table-->
-						<!---------------------------------  Display records where complete = 0 --------------------------------------->
+						<!---------------------------------  Display records where status = 0 --------------------------------------->
 						<?php $results = mysqli_query($db, "SELECT * from donor_hospital WHERE status=0"); ?>
-							<b><u>Donor-Hospital</u></b>
+							<b><u>Donor-Hospital(pending approval)</u></b>
 							<table border='5'>
 								<thead>
 									<tr>
@@ -103,7 +103,37 @@ if(isset($_GET['id']) and $_GET['app']==1){
 						<br/>
 						
 						<br>
-						
+                        <!--List of already linked donor and hospitals-->
+								<?php $results = mysqli_query($db, "SELECT * from donor_hospital WHERE status=1"); ?>
+							<b><u>Donor-Hospital(pending Doctor assignment)</u></b>
+							<table border='5'>
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Donor Name</th>
+										<th>Hospital Name</th>
+										<th>Action</th>
+		                                  
+									</tr>
+								</thead>
+								
+								<?php while ($row = mysqli_fetch_array($results)) {
+                                    $donor_id=$row['donor_id'];
+                                    $donor = mysqli_query($db, "SELECT donor_first_name, donor_last_name from donor WHERE donor_id=$donor_id");
+                                    $donor_name=mysqli_fetch_array($donor);
+    
+                                    $hosp_id=$row['hospital_id'];
+                                    $hosp = mysqli_query($db, "SELECT hospital_name from hospital WHERE hospital_id=$hosp_id");
+                                    $hosp_name=mysqli_fetch_array($hosp);
+                                ?>
+									<tr>
+										<td><?php echo $row['donor_hospital']; ?></td>
+										<td><?php echo $donor_name['donor_first_name']." ".$donor_name['donor_last_name']; ?></td>
+                                        <td><?php echo $hosp_name['hospital_name']; ?></td>
+										<td><button class="editbtn"><a href="donor_doctor.php?ass=1&hid=<?php echo $hosp_id;?>&did=<?php echo $donor_id;?>">Assign Doctor</a></button></td>
+									</tr>
+								<?php } ?>
+							</table>
 						
 						<br/>
 						<a href="home.php?logout='1'" style="color: red;">logout</a>
